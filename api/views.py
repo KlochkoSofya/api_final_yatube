@@ -1,5 +1,6 @@
-from .models import Post, Follow, Group, User
-from .serializers import PostSerializer, CommentSerializer, FollowSerializer, GroupSerializer
+from .models import Post, Group, User
+from .serializers import PostSerializer, CommentSerializer
+from .serializers import FollowSerializer, GroupSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from .permissions import IsOwnerOrReadOnly
@@ -15,7 +16,7 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['group',]
+    filterset_fields = ['group', ]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
@@ -38,7 +39,6 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 class FollowViewSet(viewsets.ModelViewSet):
     serializer_class = FollowSerializer
-    # queryset = Follow.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['user__username', 'following__username']
 
