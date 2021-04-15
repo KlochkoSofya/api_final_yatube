@@ -5,7 +5,9 @@ User = get_user_model()
 
 
 class Group(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Группа", 
+    title = models.CharField(
+        max_length=200, 
+        verbose_name="Группа",
         help_text="Введите название группы")
     description = models.TextField()
 
@@ -23,7 +25,7 @@ class Post(models.Model):
     )
     group = models.ForeignKey(
         Group, on_delete=models.SET_NULL, blank=True, null=True,
-        related_name="posts", verbose_name="Группа", 
+        related_name="posts", verbose_name="Группа",
         help_text="Введите название группы")
 
     def __str__(self):
@@ -44,10 +46,12 @@ class Comment(models.Model):
 
 
 class Follow(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, 
-        related_name="follower")
-    following = models.ForeignKey(User, on_delete=models.CASCADE, 
-        related_name="following")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="follower"
+    )
+    following = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="following"
+    )
 
     class Meta:
         constraints = [ 
