@@ -6,7 +6,7 @@ User = get_user_model()
 
 class Group(models.Model):
     title = models.CharField(
-        max_length=200, 
+        max_length=200,
         verbose_name="Группа",
         help_text="Введите название группы")
     description = models.TextField()
@@ -54,7 +54,8 @@ class Follow(models.Model):
     )
 
     class Meta:
-        constraints = [ 
-            models.UniqueConstraint(fields=['user', 'following',], 
-            name='unique_follows', )
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'following', ],
+                name='unique_follows', )
         ]
