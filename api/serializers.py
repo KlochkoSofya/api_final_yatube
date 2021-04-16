@@ -1,11 +1,12 @@
 from rest_framework import serializers
 from .models import Comment, Post, Follow, Group, User
-from rest_framework.validators import UniqueTogetherValidator
 from django.shortcuts import get_object_or_404
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(read_only=True, slug_field='username')
+    author = serializers.SlugRelatedField(
+        read_only=True, 
+        slug_field='username')
     group = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
@@ -14,7 +15,9 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(read_only=True, slug_field='username')
+    author = serializers.SlugRelatedField(
+        read_only=True, 
+        slug_field='username')
 
     class Meta:
         fields = ('id', 'author', 'post', 'text', 'created')
@@ -35,9 +38,10 @@ class FollowSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('Нельзя\
                  подписаться на самого себя')
         follow_check = Follow.objects.filter( 
-            user=user, following=following).exists() 
-        if follow_check: 
-            raise serializers.ValidationError(f'Вы уже подписаны на {following.username}') 
+            user=user, following=following).exists()
+        if follow_check:
+            raise serializers.ValidationError(f'Вы уже\
+                 подписаны на {following.username}')
         return value
 
     class Meta:
