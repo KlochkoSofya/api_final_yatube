@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
-        read_only=True, 
+        read_only=True,
         slug_field='username')
     group = serializers.PrimaryKeyRelatedField(read_only=True)
 
@@ -16,7 +16,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
-        read_only=True, 
+        read_only=True,
         slug_field='username')
 
     class Meta:
@@ -37,7 +37,7 @@ class FollowSerializer(serializers.ModelSerializer):
         if user == following:
             raise serializers.ValidationError('Нельзя\
                  подписаться на самого себя')
-        follow_check = Follow.objects.filter( 
+        follow_check = Follow.objects.filter(
             user=user, following=following).exists()
         if follow_check:
             raise serializers.ValidationError(f'Вы уже\
